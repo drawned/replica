@@ -1,0 +1,30 @@
+last-id: 0
+npcs:
+  id:
+    type: "PLAYER"
+    uuid: "uuid"
+    name: "originalName"
+    location:
+      xyz: "world x y z"
+      yaw-pitch: "yaw pitch"
+    global-options:
+      silent: false
+      scale: 1
+      look-close:
+        enabled: true
+        range: 5.0
+      no-gravity: false
+    options:
+      PLAYER:
+        signature: 01234
+        textureRaw: 56789
+    hologram:
+      auto-scale: false
+      enabled: true
+      lines:
+      - "&e&lPlayer Nickname Haha"
+  id2:
+    type: "MODEL_ENGINE"
+    options:
+      MODEL_ENGINE:
+        model: "elfonsei"

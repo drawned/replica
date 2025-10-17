@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18" apply false
+}
+
+group = 'me.drawn.replica'
+version = '1.0.6-BETA'
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            name = "papermc-repo"
+            url = "https://repo.papermc.io/repository/maven-public/"
+        }
+        maven {
+            url = "https://jitpack.io"
+        }
+        maven {
+            url = "https://mvn.lumine.io/repository/maven-public/"
+        }
+    }
+    dependencies {
+        implementation 'com.github.Anon8281:UniversalScheduler:0.1.7'
+    }
+}
+
+tasks.named('build') {
+    dependsOn(':common:shadowJar')
+}
