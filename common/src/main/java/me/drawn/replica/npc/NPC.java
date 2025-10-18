@@ -1,5 +1,6 @@
 package me.drawn.replica.npc;
 
+import me.drawn.replica.api.NPCSpawnEvent;
 import me.drawn.replica.nms.NMSHandler;
 import me.drawn.replica.npc.custom.ModelEngineNPC;
 import me.drawn.replica.npc.custom.NPCHologram;
@@ -7,6 +8,7 @@ import me.drawn.replica.npc.custom.PlayerNPC;
 import me.drawn.replica.npc.enums.InteractionType;
 import me.drawn.replica.npc.enums.NPCType;
 import me.drawn.replica.utils.DataManager;
+import me.drawn.replica.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -96,6 +98,10 @@ public abstract class NPC {
     This is called each time a player goes further away from a NPC and needs to unload it.
      */
     public abstract void remove(Player player);
+
+    public void removeFromAudienceOnly(Player player) {
+        audience.remove(player.getUniqueId());
+    }
 
     public void changeNPCType(NPCType newType) {
         this.removeForAll();
@@ -237,8 +243,8 @@ public abstract class NPC {
 
                 // Player inside range
             } else if(!isInAudience) {
-                spawn(player);
                 audience.add(player.getUniqueId());
+                spawn(player);
             }
         }
 

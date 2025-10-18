@@ -5,6 +5,7 @@ import me.drawn.replica.commands.MainCommands;
 import me.drawn.replica.npc.NPC;
 import me.drawn.replica.utils.Utils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class InfoCommand implements ICommand {
         sender.sendMessage(Utils.YELLOW_COLOR+"ID: §7"+npc.getId());
         sender.sendMessage(Utils.YELLOW_COLOR+"Name: §7"+npc.getName());
         sender.sendMessage(Utils.YELLOW_COLOR+"Active: §7"+npc.isActive());
+        sender.sendMessage(Utils.YELLOW_COLOR+"Audience: §7("+npc.getAudiencePlayers().size()+") "
+                +npc.getAudiencePlayers().stream().map(Player::getName).toList());
         sender.sendMessage(Utils.YELLOW_COLOR+"Location: §7"+MainCommands.formatLocation(npc.getLocation()));
 
         sender.sendMessage(MainCommands.divider);

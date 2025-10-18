@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
@@ -27,6 +28,9 @@ public class PlayerEvents implements Listener {
         NPCHandler.activeNpcs.forEach(active -> {
             active.remove(e.getPlayer());
         });
+        /*for(NPC npc : NPCHandler.npcs) {
+            npc.removeFromAudienceOnly(e.getPlayer());
+        }*/
     }
 
     @EventHandler
@@ -43,7 +47,11 @@ public class PlayerEvents implements Listener {
 
         for(NPC npc : NPCHandler.activeNpcs) {
             if(npc.getEntityId() == id) {
-                Bukkit.getPluginManager().callEvent(new NPCInteractEvent(npc, interactionType));
+                NPCInteractEvent interactEvent = new NPCInteractEvent(npc, interactionType, p);
+                Bukkit.getPluginManager().callEvent(interactEvent);
+
+                if(interactEvent.isCancelled())
+                    return;
 
                 Replica.getScheduler().runTaskLater(() -> {
                     cooldown.remove(p.getUniqueId());

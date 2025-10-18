@@ -8,7 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class NPCInteractEvent extends Event implements Cancellable {
+public class NPCSpawnEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     public static HandlerList getHandlerList() {return HANDLERS;}
@@ -16,25 +16,19 @@ public class NPCInteractEvent extends Event implements Cancellable {
     @Override
     public @NotNull HandlerList getHandlers() {return HANDLERS;}
 
-    private final InteractionType interactionType;
     private final NPC npc;
     private final Player player;
 
     private boolean isCancelled;
 
-    public NPCInteractEvent(final NPC npc, final InteractionType interactionType, final Player player) {
+    public NPCSpawnEvent(final NPC npc, final Player player) {
         this.npc = npc;
-        this.interactionType = interactionType;
         this.player = player;
-        isCancelled = false;
+        this.isCancelled = false;
     }
 
     public Player getPlayer() {
         return this.player;
-    }
-
-    public InteractionType getInteractionType() {
-        return this.interactionType;
     }
 
     public NPC getNPC() {

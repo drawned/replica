@@ -1,11 +1,14 @@
 package me.drawn.replica.utils;
 
 import me.drawn.replica.Replica;
+import me.drawn.replica.api.NPCSpawnEvent;
+import me.drawn.replica.npc.NPC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -14,6 +17,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.text.Normalizer;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class Utils {
@@ -23,6 +28,29 @@ public class Utils {
 
     public static String sanitize(String texto) {
         return Normalizer.normalize(texto, Normalizer.Form.NFD).replaceAll("\\p{M}", "");
+    }
+
+    public static boolean throwSyncSpawnEvent(final NPC npc, final Player player) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        // Executa no thread principal
+        Replica.getScheduler().runTask(() -> {
+            try {
+                NPCSpawnEvent event = new NPCSpawnEvent(npc, player);
+                Bukkit.getPluginManager().callEvent(event);
+                future.complete(event.isCancelled());
+            } catch (Throwable t) {
+                future.completeExceptionally(t);
+            }
+        });
+
+        // Bloqueia até o resultado estar disponível
+        try {
+            return future.get(500, TimeUnit.MILLISECONDS); // pode usar .get(timeout, TimeUnit.SECONDS) se quiser limite
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /*
