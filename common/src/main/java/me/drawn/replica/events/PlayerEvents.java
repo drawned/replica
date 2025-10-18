@@ -2,9 +2,12 @@ package me.drawn.replica.events;
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent;
 import me.drawn.replica.Replica;
+import me.drawn.replica.api.NPCInteractEvent;
+import me.drawn.replica.api.NPCTeleportEvent;
 import me.drawn.replica.npc.NPC;
 import me.drawn.replica.npc.NPCHandler;
 import me.drawn.replica.npc.enums.InteractionType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +43,8 @@ public class PlayerEvents implements Listener {
 
         for(NPC npc : NPCHandler.activeNpcs) {
             if(npc.getEntityId() == id) {
+                Bukkit.getPluginManager().callEvent(new NPCInteractEvent(npc, interactionType));
+
                 Replica.getScheduler().runTaskLater(() -> {
                     cooldown.remove(p.getUniqueId());
                 }, 2);

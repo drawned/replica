@@ -1,9 +1,11 @@
 package me.drawn.replica.commands.custom;
 
+import me.drawn.replica.api.NPCTeleportEvent;
 import me.drawn.replica.commands.ICommand;
 import me.drawn.replica.commands.MainCommands;
 import me.drawn.replica.npc.NPC;
 import me.drawn.replica.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,6 +46,7 @@ public class TphereCommand implements ICommand {
             return true;
         }
 
+        Bukkit.getPluginManager().callEvent(new NPCTeleportEvent(npc));
         npc.teleport(p.getLocation());
 
         Utils.normalMessage(sender, "NPC "+MainCommands.npcFormat(npc)+" got teleported to your current position.");
