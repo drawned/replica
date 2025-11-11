@@ -104,6 +104,10 @@ public class ModelEngineNPC extends NPC {
 
     @Override
     public void spawn(Player player) {
+        if(this.activeModel == null) {
+            applyModel(npcData.modelEngine());
+        }
+
         if(renderCanceled) {
             ModelEngineAPI.setRenderCanceled(dummy.getEntityId(), false);
             renderCanceled = false;

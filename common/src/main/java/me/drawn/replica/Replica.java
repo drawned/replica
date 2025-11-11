@@ -67,9 +67,9 @@ public final class Replica extends JavaPlugin {
         empty();
 
         log("&fInitializing all async tasks...");
-        Replica.getScheduler().runTaskTimerAsynchronously(NPCHandler::allTick, 120, 20);
-        Replica.getScheduler().runTaskTimerAsynchronously(NPCHandler::allActiveTick, 120, 1);
-        Replica.getScheduler().runTaskTimerAsynchronously(DataManager::saveData, 120, 6000);
+        Replica.getScheduler().runTaskTimerAsynchronously(NPCHandler::allTick, 60, 20);
+        Replica.getScheduler().runTaskTimerAsynchronously(NPCHandler::allActiveTick, 70, 1);
+        Replica.getScheduler().runTaskTimerAsynchronously(DataManager::saveData, 70, 6000);
         empty();
 
         log("&fRunning metrics and plugin update checker...");
@@ -86,12 +86,8 @@ public final class Replica extends JavaPlugin {
         });
 
         empty();
-
-        getScheduler().runTaskLater(() -> {
-            log("&fLoading all NPCs...");
-            NPCHandler.loadAll();
-            secondLog("Loaded "+NPCHandler.npcs.size()+" NPCs!");
-        }, 80);
+        log("&fLoading all NPCs...");
+        NPCHandler.loadAll();
     }
 
     public static void log(String message) {

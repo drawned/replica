@@ -22,7 +22,7 @@ public class ActionCommand implements ICommand {
 
     @Override
     public List<String> getAliases() {
-        return List.of("interaction", "cmd");
+        return List.of("interaction", "cmd", "command", "actions");
     }
 
     @Override

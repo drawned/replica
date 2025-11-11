@@ -22,6 +22,7 @@ public class NPCSpawnEvent extends Event implements Cancellable {
     private boolean isCancelled;
 
     public NPCSpawnEvent(final NPC npc, final Player player) {
+        super(true);
         this.npc = npc;
         this.player = player;
         this.isCancelled = false;

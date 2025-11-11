@@ -1,5 +1,6 @@
 package me.drawn.replica.npc;
 
+import me.drawn.replica.Replica;
 import me.drawn.replica.api.NPCSpawnEvent;
 import me.drawn.replica.nms.NMSHandler;
 import me.drawn.replica.npc.custom.ModelEngineNPC;
@@ -13,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.N;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -200,13 +202,6 @@ public abstract class NPC {
     public void tick(final Map<Player, Location> cachedGlobalAudience) {
         if(location == null) return;
 
-        spawnedForAnyone = !audience.isEmpty();
-
-        if(spawnedForAnyone)
-            NPCHandler.activeNpcs.add(this);
-        else
-            NPCHandler.activeNpcs.remove(this);
-
         if(cachedGlobalAudience.isEmpty()) return;
 
         final World world = location.getWorld();
@@ -227,7 +222,7 @@ public abstract class NPC {
                     audience.remove(player.getUniqueId());
                     remove(player);
                 }
-                return;
+                continue;
             }
 
             double dx = playerLoc.getX() - x;
@@ -243,10 +238,24 @@ public abstract class NPC {
 
                 // Player inside range
             } else if(!isInAudience) {
-                audience.add(player.getUniqueId());
-                spawn(player);
+                NPCSpawnEvent spawnEvent = new NPCSpawnEvent(this, player);
+                Bukkit.getPluginManager().callEvent(spawnEvent);
+
+                if(!spawnEvent.isCancelled()) {
+                    /*IMPORTANT:
+                    SPAWN METHOD ALWAYS ABOVE THE AUDIENCE#ADD METHOD.*/
+                    spawn(player);
+                    audience.add(player.getUniqueId());
+                }
             }
         }
+
+        spawnedForAnyone = !audience.isEmpty();
+
+        if(spawnedForAnyone)
+            NPCHandler.activeNpcs.add(this);
+        else
+            NPCHandler.activeNpcs.remove(this);
 
         if(this.hologram != null)
             this.hologram.tick();

@@ -72,7 +72,8 @@ public class NPCHandler {
     }
 
     public static void allTick() {
-        final Map<Player, Location> globalAudience = new HashMap<>();
+        Map<Player, Location> globalAudience = new HashMap<>();
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             globalAudience.put(player, player.getLocation());
         }

@@ -39,6 +39,7 @@ public class MainCommands implements TabExecutor {
         register(new ModelCommand());
         register(new HologramCommand());
         register(new TpCommand());
+        register(new ForceSpawnCommand());
         register(new TphereCommand());
         register(new DeleteCommand());
         register(new LookCloseCommand());
