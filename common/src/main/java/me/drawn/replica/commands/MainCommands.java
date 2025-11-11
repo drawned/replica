@@ -147,6 +147,7 @@ public class MainCommands implements TabExecutor {
 
         BaseComponent description = new TextComponent(subCommand.getDescription());
         description.setColor(ChatColor.GRAY);
+        description.setUnderlined(false);
 
         baseComponent.addExtra(separator);
         baseComponent.addExtra(description);
