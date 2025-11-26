@@ -13,6 +13,8 @@ dependencies {
     runtimeOnly project(path: ':v1_21_R6', configuration: 'reobf')
     runtimeOnly project(path: ':v1_21_R7', configuration: 'reobf')
     runtimeOnly project(path: ':v1_21_R8', configuration: 'reobf')
+    runtimeOnly project(path: ':v1_21_R9', configuration: 'reobf')
+    runtimeOnly project(path: ':v1_21_R10', configuration: 'reobf')
 
     compileOnly 'com.ticxo.modelengine:ModelEngine:R4.0.8'
     compileOnly 'io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT'

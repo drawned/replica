@@ -3,6 +3,7 @@ package me.drawn.replica;
 import com.github.Anon8281.universalScheduler.UniversalScheduler;
 import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
 import me.drawn.replica.commands.MainCommands;
+import me.drawn.replica.events.PaperEvents;
 import me.drawn.replica.events.PlayerEvents;
 import me.drawn.replica.hooks.MEGHook;
 import me.drawn.replica.nms.NMSHandler;
@@ -56,6 +57,16 @@ public final class Replica extends JavaPlugin {
         log("&fInitializing commands and events...");
         this.getCommand("replica").setExecutor(new MainCommands());
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+
+        try {
+            secondLog("Loading PaperMC exclusives...");
+            Class.forName("com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent");
+
+            getServer().getPluginManager().registerEvents(new PaperEvents(), this);
+        } catch (ClassNotFoundException e) {
+            secondLogError("Hey, it seems like you are not using Paper or any other Paper fork, the NPC actions system will not work.");
+        }
+
         empty();
 
         log("&fInitializing integration with other plugins...");

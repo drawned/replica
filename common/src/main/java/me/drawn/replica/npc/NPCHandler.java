@@ -1,6 +1,7 @@
 package me.drawn.replica.npc;
 
 import me.drawn.replica.Replica;
+import me.drawn.replica.events.PaperEvents;
 import me.drawn.replica.events.PlayerEvents;
 import me.drawn.replica.npc.custom.ModelEngineNPC;
 import me.drawn.replica.npc.custom.PlayerNPC;
@@ -88,7 +89,7 @@ public class NPCHandler {
             }
         }
 
-        PlayerEvents.cooldown.clear();
+        PaperEvents.cooldown.clear();
     }
 
     public static void allActiveTick() {

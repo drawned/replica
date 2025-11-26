@@ -14,7 +14,7 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.List;
 
-import static me.drawn.replica.events.PlayerEvents.cooldown;
+import static me.drawn.replica.events.PaperEvents.cooldown;
 
 public class MEGHook implements Listener {
 
